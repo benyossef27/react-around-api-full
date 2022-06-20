@@ -1,0 +1,34 @@
+.profile__popup-button{
+  border: 1px solid #FFFFFF;
+  height: 24px;
+  width: 24px;
+  padding: 7px;
+  margin-top: 36px;
+  border-radius: 2px;
+  transition: all .2s ease;
+  cursor: pointer;
+  background-image: url(../../../images/profile/profile__popup-button.svg);
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+  
+.profile__popup-button:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 888px){
+  .profile__popup-button{
+    justify-self: center;
+  }
+}
+
+@media screen and (max-width: 675px){
+  .profile__popup-button{
+    grid-area: pop;
+    margin-top: 30px;
+    height: 18px;
+    width: 18px;
+  }
+}

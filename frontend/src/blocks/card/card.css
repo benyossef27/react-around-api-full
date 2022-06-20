@@ -1,0 +1,9 @@
+.card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-family:Inter, Verdana, Geneva, Tahoma, sans-serif;
+    background-color: white;
+    border-radius: 10px;
+    max-width: 282px;
+}

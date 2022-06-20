@@ -1,0 +1,12 @@
+.sign {
+  font-family: Inter, Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 358px;
+  color: #ffffff;
+  background-color: #000000;
+  justify-content: center;
+  /* padding: 50px 0; */
+}

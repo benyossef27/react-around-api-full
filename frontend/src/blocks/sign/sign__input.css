@@ -1,0 +1,22 @@
+.sign__input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 0;
+  width: 358px;
+  color: #cccccc;
+  border-bottom: 1px solid #cccccc;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 17px;
+  margin-top: 30px;
+  margin-bottom: 13px;
+}
+
+@media screen and (max-width: 500px) {
+  .sign__input {
+    width: 260px;
+    line-height: 16.94px;
+    font: 14px;
+  }
+}

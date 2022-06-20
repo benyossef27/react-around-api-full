@@ -1,0 +1,13 @@
+.card__image {
+  grid-area: image;
+  border-radius: 10px 10px 0px 0px;
+  height: 282px;
+  cursor: pointer;
+  background-position: center;
+  background-size: cover;
+}
+
+.card__image:hover {
+  transform: scale(1.02);
+  transition: 0.3s;
+}

@@ -1,0 +1,11 @@
+.loading {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  color: aqua;
+}
+
+.loading__text {
+  color: aqua;
+  text-align: center;
+}
