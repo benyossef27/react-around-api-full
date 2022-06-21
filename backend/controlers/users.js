@@ -1,63 +1,114 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const validator = require('validator');
 const User = require('../models/user');
+const handleInvalidDataError = require('../errors/invalid-data-err');
+const NotFoundError = require('../errors/not-found-err');
 
-const ERROR_400 = 400;
-const ERROR_404 = 404;
-const ERROR_500 = 500;
-
-function errorHandler(err, res) {
-  if (err.name === 'ValidationError') {
-    res.status(ERROR_400).send({ message: 'Not a valid user profile' });
-  } else {
-    res.status(ERROR_500).send({ message: 'Internal Server Error' });
-  }
-}
-
-module.exports.getUsers = (err, res) => {
-  User.find({})
-    .then((users) => res.send(users))
-    .catch(() => errorHandler(err, res));
-};
-
-module.exports.getUserById = (req, res) => {
-  User.findById(req.params._id)
+const { NODE_ENV, JWT_SECRET } = process.env;
+const options = { runValidators: true, new: true };
+module.exports.getUser = (req, res, next) => {
+  User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        res.status(ERROR_404).send({ message: 'User ID not found' });
-      } else {
-        res.send({ user });
+        throw new NotFoundError('No user found with that id');
       }
+      res.send({ data: user });
     })
     .catch((err) => {
-      errorHandler(err, res);
+      next(err);
     });
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
+  User.find({})
+    .then((users) => res.send({ data: users }))
+    .catch((err) => next(err));
+};
+
+module.exports.createUser = (req, res, next) => {
   const { name, about, avatar } = req.body;
-  console.log(req.body);
-  User.create({ name, about, avatar })
-    .then((user) => res.send({ user }))
+  let email;
+  if (!validator.isEmail(req.body.email)) {
+    email = null;
+  } else {
+    email = req.body.email;
+  }
+  bcrypt
+    .hash(req.body.password, 10)
+    .then((hash) =>
+      User.create({
+        name,
+        about,
+        avatar,
+        password: hash,
+        email,
+      })
+    )
+    .then((user) => {
+      res.send({ data: user });
+    })
     .catch((err) => {
-      errorHandler(err, res);
+      handleInvalidDataError(err, res);
+      next(err);
     });
 };
 
-module.exports.updateUser = (req, res) => {
+module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
-  const opts = { runValidators: true };
-  User.findByIdAndUpdate(req.user._id, { name, about }, opts)
-    .then((user) => res.send({ user }, { new: true }))
+  User.findOneAndUpdate(req.user._id, { name, about }, options)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('No user found with that id');
+      }
+      res.send({ data: user });
+    })
     .catch((err) => {
-      errorHandler(err, res);
+      next(err);
     });
 };
 
-module.exports.updateAvatar = (req, res) => {
+module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  const opts = { runValidators: true };
-  User.findByIdAndUpdate(req.user._id, { avatar }, opts)
-    .then((user) => res.send({ user }, { new: true }))
+  User.findOneAndUpdate(req.user._id, { avatar }, options)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('No user found with that id');
+      }
+      res.send({ data: user });
+    })
     .catch((err) => {
-      errorHandler(err, res);
+      handleInvalidDataError(err, res);
+      next(err);
+    });
+};
+module.exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        {
+          expiresIn: '7d',
+        }
+      );
+      res.send({ token });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+module.exports.getCurrentUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('No user found with that id');
+      }
+      res.send({ user });
+    })
+    .catch((err) => {
+      next(err);
     });
 };

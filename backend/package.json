@@ -1,7 +1,7 @@
 {
   "name": "around-express",
   "version": "1.0.0",
-  "description": "`/data` — JSON files to temporarily emulate database integration.",
+  "description": "around the US back end",
   "main": "app.js",
   "scripts": {
     "start": "app.js",
@@ -10,26 +10,33 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yandex-praktikum/around-express.git"
+    "url": "git+https://github.com/benyossef27/around-express.git"
   },
   "author": "Benyo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yandex-praktikum/around-express/issues"
+    "url": "https://github.com/benyossef27/around-express/issues"
   },
-  "homepage": "https://github.com/yandex-praktikum/around-express#readme",
+  "homepage": "https://github.com/benyossef27/around-express#readme",
   "devDependencies": {
     "eslint": "^8.15.0",
     "nodemon": "^2.0.16"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "celebrate": "^15.0.1",
+    "dotenv": "^16.0.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "express": "^4.18.1",
+    "express-winston": "^4.2.0",
     "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.4",
-    "react": "^18.1.0"
+    "react": "^18.1.0",
+    "validator": "^13.7.0",
+    "winston": "^3.7.2"
   },
   "prettier": {
     "singleQuote": true
