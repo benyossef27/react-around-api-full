@@ -18,6 +18,7 @@ export default function InfoTooltip(props) {
         <img
           className="popup__registration-status"
           src={props.status === false ? fail : succes}
+          alt="fail/succes"
         />
         <span className="popup__registration-text">
           {props.status === false

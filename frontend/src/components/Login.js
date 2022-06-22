@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Login({ onLoginClick }) {
   const [values, setValues] = useState({ email: "", password: "" });
@@ -14,7 +14,6 @@ export default function Login({ onLoginClick }) {
     onLoginClick(values);
   }
 
-  const navigate = useNavigate();
   return (
     <div className="sign">
       <h2 className="sign__title">Log in</h2>

@@ -1,12 +1,9 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useFormAndValidation } from "../utils/useFormAndValidation";
 
 export default function EditProfilePopup(props) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const { inputs, handleChange, errors, isValid, setInputs, resetForm } =
-    useFormAndValidation();
+  const { inputs, handleChange, errors, isValid } = useFormAndValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
