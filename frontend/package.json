@@ -20,7 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* benyo27@benyo27.students.nomoreparties.sbs"
+    "deploy": "npm run build && scp -r ./build/* around@benyo27.students.nomoreparties.sbs"
   },
   "eslintConfig": {
     "extends": [
