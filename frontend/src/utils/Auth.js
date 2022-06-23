@@ -1,4 +1,4 @@
-const BASE_URL = "https://register.nomoreparties.co";
+const BASE_URL = "https://benyo27.students.nomoreparties.sbs";
 
 export async function checkRes(res) {
   if (res.ok) {
