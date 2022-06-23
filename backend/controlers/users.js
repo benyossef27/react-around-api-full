@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const validator = require('validator');
 
 const ERROR_400 = 400;
 const ERROR_404 = 404;
@@ -32,13 +34,31 @@ module.exports.getUserById = (req, res) => {
     });
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   const { name, about, avatar } = req.body;
-  console.log(req.body);
-  User.create({ name, about, avatar })
-    .then((user) => res.send({ user }))
+  let email;
+  if (!validator.isEmail(req.body.email)) {
+    email = null;
+  } else {
+    email = req.body.email;
+  }
+  bcrypt
+    .hash(req.body.password, 10)
+    .then((hash) =>
+      User.create({
+        name,
+        about,
+        avatar,
+        password: hash,
+        email,
+      })
+    )
+    .then((user) => {
+      res.send({ data: user });
+    })
     .catch((err) => {
-      errorHandler(err, res);
+      handleInvalidDataError(err, res);
+      next(err);
     });
 };
 

@@ -1,7 +1,7 @@
 {
   "name": "react-around-api-full",
   "version": "0.1.0",
-  "homepage": "https://benyossef27.github.io/react-around-api-full/",
+  "homepage": "https://benyo27.students.nomoreparties.sbs",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
@@ -20,7 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* around@benyo27.students.nomoreparties.sbs"
+    "deploy": "scp -r ./build/* benyo27@benyo27.students.nomoreparties.sbs:/home/benyo27/react-around-api-full/frontend"
   },
   "eslintConfig": {
     "extends": [
