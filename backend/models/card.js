@@ -9,25 +9,26 @@ const cardSchema = new mongoose.Schema({
   },
   link: {
     type: String,
-    required: true,
     validate: {
-      validator(v) {
-        return /^(https?):\/\/(www\.)?[\w-@:%+~#=]+[.][.\w/\-?#=&~@:()!$+%]*$/gm.test(
-          v
-        );
+      validator: (v) => {
+        /^(http|https):\/\/[^ "]+$/.test(v);
       },
+      message: (props) => `${props.value} is not a valid URL!`,
     },
+    required: [true, 'URL is required'],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
   },
-  likes: {
-    type: [mongoose.Schema.Types.ObjectId],
-    default: [],
-    ref: 'user',
-  },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user',
+      default: [],
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
