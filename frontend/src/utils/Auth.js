@@ -1,4 +1,4 @@
-const BASE_URL = "https://benyo27.students.nomoreparties.sbs";
+const BASE_URL = "https://api.benyo27.students.nomoreparties.sbs";
 
 export async function checkRes(res) {
   if (res.ok) {
