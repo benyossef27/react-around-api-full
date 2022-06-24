@@ -91,9 +91,8 @@ export default function App() {
     setEditAddPlaceButton("adding...");
     api
       .createCard(info)
-      .then((newCard) => {
-        console.log(newCard);
-        setCards([newCard, ...cards]);
+      .then((res) => {
+        setCards([res.card, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {
@@ -132,9 +131,8 @@ export default function App() {
   useEffect(() => {
     api
       .getInitialCards()
-      .then((data) => {
-        console.log(data);
-        setCards([data, ...cards]);
+      .then((res) => {
+        setCards(res.cards, ...cards);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
