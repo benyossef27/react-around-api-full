@@ -10,16 +10,20 @@ export default function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-box" onClick={props.onEditAvatarClick}>
-          <img className="profile__avatar" alt="you" src={currentUser.avatar} />
+          <img
+            className="profile__avatar"
+            alt="you"
+            src={currentUser.user.avatar}
+          />
           <img
             className="profile__avatar-edit"
             src={avatar_edit}
-            alt={currentUser.name}
+            alt={currentUser.user.name}
           />
         </div>
         <div className="profile__details">
-          <h1 className="profile__name">{currentUser.name}</h1>
-          <p className="profile__job">{currentUser.about}</p>
+          <h1 className="profile__name">{currentUser.user.name}</h1>
+          <p className="profile__job">{currentUser.user.about}</p>
         </div>
         <button
           className="profile__popup-button"
@@ -35,15 +39,16 @@ export default function Main(props) {
         ></button>
       </section>
       <section className="cards">
-        {props.cards.slice(0, 30).map((card) => (
-          <Card
-            key={card._id}
-            card={card}
-            onCardClick={props.onCardClick}
-            onCardLike={props.onCardLike}
-            onCardDelete={props.onCardDelete}
-          />
-        ))}
+        {props.cards.length > 0 &&
+          props.cards.map((card) => (
+            <Card
+              key={card._id}
+              card={card}
+              onCardClick={props.onCardClick}
+              onCardLike={props.onCardLike}
+              onCardDelete={props.onCardDelete}
+            />
+          ))}
       </section>
     </main>
   );

@@ -13,7 +13,7 @@ module.exports.getUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('No user found with that id');
       }
-      res.send({ data: user });
+      res.send({ user });
     })
     .catch((err) => {
       next(err);
@@ -22,7 +22,7 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.send({ data: users }))
+    .then((users) => res.send({ users }))
     .catch((err) => next(err));
 };
 
@@ -46,7 +46,7 @@ module.exports.createUser = (req, res, next) => {
       })
     )
     .then((user) => {
-      res.send({ data: user });
+      res.send({ user });
     })
     .catch((err) => {
       handleInvalidDataError(err, res);
@@ -61,7 +61,7 @@ module.exports.updateUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('No user found with that id');
       }
-      res.send({ data: user });
+      res.send({ user });
     })
     .catch((err) => {
       next(err);
@@ -75,7 +75,7 @@ module.exports.updateAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('No user found with that id');
       }
-      res.send({ data: user });
+      res.send({ user });
     })
     .catch((err) => {
       handleInvalidDataError(err, res);

@@ -132,7 +132,7 @@ export default function App() {
     api
       .getInitialCards()
       .then((Data) => {
-        setCards((cards) => [...cards, ...Data]);
+        setCards(Data);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
@@ -207,7 +207,7 @@ export default function App() {
     authorize(values)
       .then((res) => {
         if (res) {
-          setValues(res.email);
+          setValues(res.user.email);
           setIsLoggedIn(true);
           setToken(res.token);
           navigate("/");
@@ -227,7 +227,8 @@ export default function App() {
       localStorage.setItem("token", token);
       getContent(token)
         .then((res) => {
-          setValues(res.data.email);
+          console.log(res);
+          setValues(res.user.email);
           setIsLoggedIn(true);
           navigate("/");
         })
