@@ -8,10 +8,12 @@ const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controlers/users');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
+const cors = require('cors');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
+app.use(cors());
 mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(express.json());
 app.use(helmet());
