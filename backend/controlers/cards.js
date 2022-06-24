@@ -35,7 +35,7 @@ module.exports.createCard = (req, res, next) => {
 
 module.exports.likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
-    req.card.cardId,
+    req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true }
   )
