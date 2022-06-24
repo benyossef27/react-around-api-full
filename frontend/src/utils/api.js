@@ -57,14 +57,14 @@ class Api extends React.Component {
     });
   }
   changeLikeCardStatus(card, isLiked) {
-    console.log(card, card._id);
+    console.log(card._id);
     if (isLiked) {
-      return this._customFetch(`${this._baseUrl}/cards/likes/${card}`, {
+      return this._customFetch(`${this._baseUrl}/cards/${card._id}/likes`, {
         headers: this._headers,
         method: "PUT",
       });
     } else {
-      return this._customFetch(`${this._baseUrl}/cards/likes/${card}`, {
+      return this._customFetch(`${this._baseUrl}/cards/${card._id}/likes/`, {
         headers: this._headers,
         method: "DELETE",
       });
