@@ -74,7 +74,7 @@ class Api extends React.Component {
 ///////////////////////////Api instance//////////////////////////////////////
 const jwt = localStorage.getItem("jwt");
 const api = new Api({
-  baseUrl: "https://api.benyo27.students.nomoreparties.sbs",
+  baseUrl: "https://benyo27.students.nomoreparties.sbs/api",
   headers: {
     Accept: "application/json",
     Authorization: `Bearer ${jwt}`,
