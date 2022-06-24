@@ -92,6 +92,7 @@ export default function App() {
     api
       .createCard(info)
       .then((newCard) => {
+        console.log(newCard);
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
@@ -131,8 +132,9 @@ export default function App() {
   useEffect(() => {
     api
       .getInitialCards()
-      .then((Data) => {
-        setCards(Data);
+      .then((data) => {
+        console.log(data);
+        setCards([data, ...cards]);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
@@ -207,7 +209,7 @@ export default function App() {
     authorize(values)
       .then((res) => {
         if (res) {
-          setValues(res.user.email);
+          setValues(res.email);
           setIsLoggedIn(true);
           setToken(res.token);
           navigate("/");
@@ -227,7 +229,6 @@ export default function App() {
       localStorage.setItem("token", token);
       getContent(token)
         .then((res) => {
-          console.log(res);
           setValues(res.user.email);
           setIsLoggedIn(true);
           navigate("/");
