@@ -16,13 +16,13 @@ const NotFoundError = require('./errors/not-found-err');
 const { PORT = 3000 } = process.env;
 
 const app = express();
-app.use(cors({ origin: '*' }));
 
 mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(express.json());
-app.use(express.json({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
+app.use(errors());
+app.use(cors());
+app.options('*', cors());
 app.use(requestLogger);
 app.use(limiter);
 app.use('*', auth);
@@ -53,8 +53,7 @@ app.post(
 
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
-app.use(errors());
-app.use(errorLogger);
+
 app.get('*', (req, res) => {
   throw new NotFoundError();
 });
