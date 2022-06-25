@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(requestLogger);
 app.use(limiter);
-app.use(auth);
+app.use('*', auth);
 app.post(
   '/signin',
   celebrate({
