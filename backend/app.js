@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const helmet = require('helmet');
-const { errors, celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controlers/users');
