@@ -9,8 +9,6 @@ const {
   getCurrentUser,
   createUser,
 } = require('../controlers/users');
-const cors = require('cors');
-userRouter.use(cors());
 
 const validateURL = (value, helpers) => {
   if (validator.isURL(value)) {
