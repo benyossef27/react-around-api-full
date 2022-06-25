@@ -20,7 +20,8 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(express.json());
 app.use(helmet());
-app.use(cors({ origin: '*' }));
+app.use(cors());
+app.options('/*', cors());
 app.use(requestLogger);
 app.use(limiter);
 

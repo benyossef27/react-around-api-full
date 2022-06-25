@@ -8,6 +8,9 @@ const {
   likeCard,
   dislikeCard,
 } = require('../controlers/cards');
+const cors = require('cors');
+cardsRouter.use(cors());
+cardsRouter.options('*', cors());
 
 const validateURL = (value, helpers) => {
   if (validator.isURL(value)) {
