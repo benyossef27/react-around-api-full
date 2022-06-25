@@ -11,6 +11,7 @@ const auth = require('./middleware/auth');
 const cors = require('cors');
 const { limiter } = require('./helpers/limiter');
 const { default: App } = require('../frontend/src/components/App');
+const NotFoundError = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
 
@@ -21,15 +22,37 @@ mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(express.json());
 app.use(helmet());
 app.use(requestLogger);
-app.post('/signin', login);
-app.post('/signup', createUser);
+app.post(
+  '/signin',
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().required().email(),
+      password: Joi.string().required(),
+    }),
+  }),
+  login
+);
+app.post(
+  '/signup',
+  celebrate({
+    body: Joi.object().keys({
+      name: Joi.string().min(2).max(30).pattern(new RegExp('^[a-zA-Z-\\s]*$')),
+      about: Joi.string().min(2).max(30),
+      // avatar: Joi.string().uri({ scheme: ['http', 'https'] }),
+      avatar: Joi.string().uri(),
+      email: Joi.string().required().email(),
+      password: Joi.string().min(8).alphanum().required(),
+    }),
+  }),
+  createUser
+);
 app.use(auth);
 app.use('/users', userRouter);
-app.use('/cards', userRouter);
+app.use('/cards', cardsRouter);
 app.use(errors());
 app.use(errorLogger);
 app.get('*', (req, res) => {
-  res.status(404).send({ message: 'Requested resource not found' });
+  throw new NotFoundError();
 });
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
