@@ -24,7 +24,7 @@ app.use(cors());
 app.options('*', cors());
 app.use(requestLogger);
 app.use(limiter);
-app.use('/signin', userRouter);
+app.use('/signin', userRouter;
 app.use('/signup', userRouter);
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
