@@ -20,8 +20,6 @@ app.use(cors({ origin: '*' }));
 
 mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(express.json());
-app.use(express.json({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(requestLogger);
 app.use(limiter);
