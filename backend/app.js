@@ -20,40 +20,17 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(express.json());
 app.use(helmet());
-app.use(errors());
+
 app.use(cors());
 app.options('*', cors());
 app.use(requestLogger);
 app.use(limiter);
 app.use('*', auth);
-app.post(
-  '/signin',
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }),
-  login
-);
-app.post(
-  '/signup',
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().min(2).max(30).pattern(new RegExp('^[a-zA-Z-\\s]*$')),
-      about: Joi.string().min(2).max(30),
-      // avatar: Joi.string().uri({ scheme: ['http', 'https'] }),
-      avatar: Joi.string().uri(),
-      email: Joi.string().required().email(),
-      password: Joi.string().min(8).alphanum().required(),
-    }),
-  }),
-  createUser
-);
-
+app.post('/signin', login);
+app.post('/signup', createUser);
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
-
+app.use(errors());
 app.get('*', (req, res) => {
   throw new NotFoundError();
 });
