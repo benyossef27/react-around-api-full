@@ -7,7 +7,6 @@ const {
   updateUser,
   updateAvatar,
   getCurrentUser,
-  createUser,
 } = require('../controlers/users');
 
 const validateURL = (value, helpers) => {
@@ -22,8 +21,6 @@ userRouter.get('/users', getUsers);
 userRouter.get('/users/me', getCurrentUser);
 
 userRouter.get('/users/:id', getUser);
-
-userRouter.post('/user', createUser);
 
 userRouter.patch(
   '/users/me',
