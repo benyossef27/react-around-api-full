@@ -16,13 +16,8 @@ const NotFoundError = require('./errors/not-found-err');
 const { PORT = 3000 } = process.env;
 
 const app = express();
-app.use(cors({{
-  allowedHeaders: ["authorization", "Content-Type"], // you can change the headers
-  exposedHeaders: ["authorization"], // you can change the headers
-  origin: "*",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false
-}}));
+app.use(cors());
+app.use('*', cors());
 app.use(limiter);
 mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(express.json());
