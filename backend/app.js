@@ -25,7 +25,11 @@ app.post('/signin', login);
 app.post('/signup', createUser);
 app.use(auth);
 app.use('/users', userRouter);
-app.use('/cards', userRouter);
+app.post('/cards', cardsRouter);
+app.delete('/cards/:cardsId', cardsRouter);
+app.get('/cards', cardsRouter);
+app.put('/cards/:cardId/likes', cardsRouter);
+app.delete('/cards/:cardId/likes', cardsRouter);
 app.use(errors());
 app.use(errorLogger);
 app.get('*', (req, res) => {
