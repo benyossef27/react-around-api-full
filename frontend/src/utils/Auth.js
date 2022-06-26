@@ -13,7 +13,7 @@ export async function checkRes(res) {
 
 export async function register(email, password) {
   console.log(JSON.stringify(email, password));
-  const response = await fetch(`${BASE_URL}/users/:id/signup`, {
+  const response = await fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export async function register(email, password) {
 }
 
 export async function authorize(email, password) {
-  const response = await fetch(`${BASE_URL}/users/:id/signin`, {
+  const response = await fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

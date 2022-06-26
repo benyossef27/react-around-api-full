@@ -47,6 +47,6 @@ userRouter.patch(
   updateAvatar
 );
 
-userRouter.post('/:id/signin', login);
-userRouter.post(':id/singup', createUser);
+userRouter.post('/signin', login);
+userRouter.post('/singup', createUser);
 module.exports = userRouter;
