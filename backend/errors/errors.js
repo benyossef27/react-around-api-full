@@ -6,4 +6,4 @@ class Errors extends Error {
   }
 }
 
-module.exports = Error;
+module.exports = Errors;
