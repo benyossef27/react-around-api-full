@@ -29,19 +29,19 @@ module.exports.getUsers = (req, res, next) => {
 module.exports.createUser = (req, res, next) => {
   const { name, about, avatar } = req.body;
   let email;
-  if (!validator.isEmail(req.body.email)) {
+  if (!req.body.email) {
     email = null;
   } else {
     email = req.body.email;
   }
   bcrypt
     .hash(req.body.password, 10)
-    .then((hash) =>
+    .then(() =>
       User.create({
         name,
         about,
         avatar,
-        password: hash,
+        password,
         email,
       })
     )
