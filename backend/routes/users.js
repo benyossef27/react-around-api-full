@@ -44,5 +44,5 @@ userRouter.patch(
   updateAvatar
 );
 
-userRouter.post('/', createUser);
+userRouter.post('/', validator.isEmail(req.body.email), createUser);
 module.exports = userRouter;
