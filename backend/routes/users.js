@@ -54,4 +54,5 @@ userRouter.post(
   }),
   createUser
 );
+
 module.exports = userRouter;
