@@ -9,6 +9,7 @@ const { login, createUser } = require('./controlers/users');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
 const cors = require('cors');
+const { limiter } = require('./helpers/limiter');
 
 const { PORT = 3000 } = process.env;
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(errors());
 app.use(requestLogger);
+app.use(limiter);
 app.post('/signin', login);
 app.post('/signup', createUser);
 app.use(auth);
