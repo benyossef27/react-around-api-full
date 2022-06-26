@@ -4,7 +4,6 @@ const validator = require('validator');
 const User = require('../models/user');
 const handleInvalidDataError = require('../errors/invalid-data-err');
 const NotFoundError = require('../errors/not-found-err');
-const e = require('express');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const options = { runValidators: true, new: true };
@@ -37,13 +36,13 @@ module.exports.createUser = (req, res, next) => {
   }
   bcrypt
     .hash(req.body.password, 10)
-    .then((hash) =>
+    .then((password) =>
       User.create({
         name,
         about,
         avatar,
-        password,
         email,
+        password,
       })
     )
     .then((user) => {
