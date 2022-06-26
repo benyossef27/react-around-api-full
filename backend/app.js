@@ -11,7 +11,6 @@ const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
 
 const { limiter } = require('./helpers/limiter');
-const NotFoundError = require('./errors/not-found-err');
 const centralErrorHandler = require('./errors/centrelizedEror');
 
 const { PORT = 3000 } = process.env;
