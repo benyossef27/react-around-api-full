@@ -27,48 +27,48 @@ module.exports.getUsers = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-// module.exports.createUser = (req, res, next) => {
-//   const { name, about, avatar } = req.body;
-//   let email;
-//   if (!validator.isEmail(req.body.email)) {
-//     email = null;
-//   } else {
-//     email = req.body.email;
-//   }
-//   bcrypt
-//     .hash(req.body.password, 10)
-//     .then((hash) =>
-//       User.create({
-//         name,
-//         about,
-//         avatar,
-//         password: hash,
-//         email,
-//       })
-//     )
-//     .then((user) => {
-//       res.send({ user });
-//     })
-//     .catch((err) => {
-//       handleInvalidDataError(err, res);
-//       next(err);
-//     });
-// };
 module.exports.createUser = (req, res, next) => {
   const { name, about, avatar } = req.body;
   let email;
-  if (!req.body.email) {
+  if (!validator.isEmail(req.body.email)) {
     email = null;
   } else {
     email = req.body.email;
   }
   bcrypt
     .hash(req.body.password, 10)
-    .then(() => User.create({ name, about, avatar, email, password }))
-    .then((user) => res.status(201).send({ _id: user._id }))
-    .catch((err) => res.status(400).send(err))
-    .catch(next);
+    .then((hash) =>
+      User.create({
+        name,
+        about,
+        avatar,
+        password,
+        email,
+      })
+    )
+    .then((user) => {
+      res.send({ user });
+    })
+    .catch((err) => {
+      handleInvalidDataError(err, res);
+      next(err);
+    });
 };
+// module.exports.createUser = (req, res, next) => {
+//   const { name, about, avatar } = req.body;
+//   let email;
+//   if (!req.body.email) {
+//     email = null;
+//   } else {
+//     email = req.body.email;
+//   }
+//   bcrypt
+//     .hash(req.body.password, 10)
+//     .then(() => User.create({ name, about, avatar, email, password }))
+//     .then((user) => res.status(201).send({ _id: user._id }))
+//     .catch((err) => res.status(400).send(err))
+//     .catch(next);
+// };
 
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
