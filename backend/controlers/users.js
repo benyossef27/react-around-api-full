@@ -57,7 +57,7 @@ module.exports.createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
   bcrypt
     .hash(req.body.password, 10)
-    .then((hash) => User.create({ name, about, avatar, email, password }))
+    .then(() => User.create({ name, about, avatar, email, password }))
     .then((user) => res.status(201).send({ _id: user._id }))
     .catch((err) => res.status(400).send(err))
     .catch(next);
