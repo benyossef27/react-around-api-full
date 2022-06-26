@@ -14,12 +14,11 @@ const { limiter } = require('./helpers/limiter');
 const { PORT = 3000 } = process.env;
 
 const app = express();
+app.use(helmet());
 app.use(cors());
 app.use(limiter);
 mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(express.json());
-app.use(helmet());
-app.use(errors());
 app.use(requestLogger);
 app.post('/signin', login);
 app.post('/signup', createUser);
@@ -39,6 +38,7 @@ app.patch('/users/me/avatar', userRouter);
 app.put('/cards/:cardId/likes', cardsRouter);
 app.delete('/cards/:cardId/likes', cardsRouter);
 app.use(errorLogger);
+app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({
