@@ -17,16 +17,16 @@ const validateURL = (value, helpers) => {
   return helpers.error('string.uri');
 };
 
-userRouter.get('/', getUsers);
+userRouter.get('/users', getUsers);
 
-userRouter.get('/me', getCurrentUser);
+userRouter.get('/users/me', getCurrentUser);
 
-userRouter.get('/:id', getUser);
+userRouter.get('/users/:id', getUser);
 
-userRouter.post('/', createUser);
+userRouter.post('/usres', createUser);
 
 userRouter.patch(
-  '/me',
+  '/users/me',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
@@ -37,7 +37,7 @@ userRouter.patch(
 );
 
 userRouter.patch(
-  '/me/avatar',
+  '/users/me/avatar',
   celebrate({
     body: Joi.object().keys({
       avatar: Joi.string().required().custom(validateURL),
