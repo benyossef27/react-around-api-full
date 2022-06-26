@@ -29,7 +29,7 @@ app.post('/signup', createUser);
 app.use(auth);
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
-app.get('*', (req, res) => {
+app.get('*', () => {
   throw new NotFoundError();
 });
 app.use(errors());
