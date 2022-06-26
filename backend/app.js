@@ -26,6 +26,7 @@ app.use(limiter);
 app.post('/signin', login);
 app.post('/signup', createUser);
 app.use(auth);
+app.use('/users', userRouter);
 app.get('/users/me', userRouter);
 app.get('/users', userRouter);
 app.post('/users', userRouter);
