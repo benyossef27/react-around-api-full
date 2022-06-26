@@ -16,7 +16,15 @@ const validateURL = (value, helpers) => {
   return helpers.error('string.uri');
 };
 cardsRouter.get('/', getCards);
-cardsRouter.delete('/:cardId', deleteCard);
+cardsRouter.delete(
+  '/:cardId',
+  celebrate({
+    params: Joi.object().keys({
+      cardId: Joi.string().hex(),
+    }),
+  }),
+  deleteCard
+);
 cardsRouter.post(
   '/',
   celebrate({
@@ -27,7 +35,23 @@ cardsRouter.post(
   }),
   createCard
 );
-cardsRouter.put('/:cardId/likes', likeCard);
-cardsRouter.delete('/:cardId/likes', dislikeCard);
+cardsRouter.put(
+  '/:cardId/likes',
+  celebrate({
+    params: Joi.object().keys({
+      cardId: Joi.string().hex(),
+    }),
+  }),
+  likeCard
+);
+cardsRouter.delete(
+  '/:cardId/likes',
+  celebrate({
+    params: Joi.object().keys({
+      cardId: Joi.string().hex(),
+    }),
+  }),
+  dislikeCard
+);
 
 module.exports = cardsRouter;
