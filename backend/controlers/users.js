@@ -45,11 +45,11 @@ module.exports.createUser = (req, res, next) => {
         password,
       })
     )
-    .then((user) => res.status(201).send({ user })
-    .catch((err) => {res.status(409).send({message: 'user already exists '})
-      handleInvalidDataError(err, res);
-      next(err);
-    });
+    .then((user) => res.status(201).send({ user }))
+    .catch((err) => {
+      res.status(409).send(err, { message: 'user already exists ' });
+    })
+    .catch(next(err));
 };
 // module.exports.createUser = (req, res, next) => {
 //   const { name, about, avatar } = req.body;
