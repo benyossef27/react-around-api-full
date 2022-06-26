@@ -11,6 +11,7 @@ const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
 
 const { limiter } = require('./helpers/limiter');
+const NotFoundError = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
 
@@ -29,7 +30,7 @@ app.use(auth);
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
 app.get('*', (req, res) => {
-  res.status(404).send({ message: 'Requested resource not found' });
+  throw new NotFoundError();
 });
 app.use(errors());
 app.use(errorLogger);
