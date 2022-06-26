@@ -9,6 +9,7 @@ const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controlers/users');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
+const Errors = require('./errors/errors');
 
 const { limiter } = require('./helpers/limiter');
 const centralErrorHandler = require('./errors/centrelizedEror');
@@ -48,7 +49,7 @@ app.use(auth);
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
 app.get('*', () => {
-  throw new Error();
+  throw new Errors();
 });
 app.use(errors());
 app.use(errorLogger);

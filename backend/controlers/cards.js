@@ -1,12 +1,13 @@
+const Errors = require('../errors/errors');
 const Card = require('../models/card');
 
 module.exports.deleteCard = (req, res, next) => {
   Card.findOne({ _id: req.params.cardId }).then((card) => {
     if (!card) {
-      throw new AppError(404, 'Card not found with that id');
+      throw new Errors(404, 'Card not found with that id');
     }
     if (card.owner.valueOf() !== req.user._id) {
-      throw new AppError(403, 'Forbidden');
+      throw new Errors(403, 'Forbidden');
     }
     return Card.findOneAndDelete(req.params.cardId)
       .then((deletedCard) => res.send({ data: deletedCard }))
@@ -39,7 +40,7 @@ module.exports.likeCard = (req, res, next) => {
   )
     .then((card) => {
       if (!card) {
-        throw new Error(404, 'Card not found');
+        throw new Errors(404, 'Card not found');
       }
       res.send({ card });
     })
@@ -55,7 +56,7 @@ module.exports.dislikeCard = (req, res, next) => {
   )
     .then((card) => {
       if (!card) {
-        throw new Error(404, 'Card not found');
+        throw new Errors(404, 'Card not found');
       }
       res.send({ card });
     })
