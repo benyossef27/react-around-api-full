@@ -4,6 +4,7 @@ const validator = require('validator');
 const User = require('../models/user');
 const handleInvalidDataError = require('../errors/invalid-data-err');
 const NotFoundError = require('../errors/not-found-err');
+const AuthError = require('../errors/auth-err');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const options = { runValidators: true, new: true };
@@ -47,9 +48,11 @@ module.exports.createUser = (req, res, next) => {
     )
     .then((user) => res.status(201).send({ user }))
     .catch((err) => {
-      res.status(409).send(err, { message: 'user already exists ' });
-    })
-    .catch(next(err));
+      err.status(409).send(err, { message: 'user already exists ' });
+      next(() => {
+        throw new AuthError();
+      });
+    });
 };
 // module.exports.createUser = (req, res, next) => {
 //   const { name, about, avatar } = req.body;
