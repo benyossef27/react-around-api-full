@@ -8,6 +8,7 @@ const {
   updateAvatar,
   getCurrentUser,
   createUser,
+  login,
 } = require('../controlers/users');
 
 const validateURL = (value, helpers) => {
@@ -46,4 +47,6 @@ userRouter.patch(
   updateAvatar
 );
 
+userRouter.post('/signin', login);
+userRouter.post('/singup', createUser);
 module.exports = userRouter;
