@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const AuthError = require('../errors/auth-err');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -29,12 +30,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator: (email) => validator.isEmail(email),
+      message: 'Email address not valid ',
+    },
   },
   password: {
     type: String,
     required: true,
     minlength: 8,
     select: false,
+    validate: {
+      validator(v) {
+        return /^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}*$/gm.test(
+          v
+        );
+      },
+    },
   },
 });
 
