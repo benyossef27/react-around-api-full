@@ -12,15 +12,17 @@ export default function Card({ onCardClick, card, onCardDelete, onCardLike }) {
   function handleLikeClick() {
     onCardLike(card);
   }
-  const isOwn = card.owner._id === currentUser._id;
+  const isOwn = card.owner === currentUser.user._id;
   const cardDeleteButtonClassName = `card__delete-button ${
     isOwn ? "" : "card__delete-button_hidden"
   }`;
-  const isLiked = card.likes.some((user) => user._id === currentUser._id);
+  const isLiked = card.likes.some((like) => like === currentUser.user._id);
   const cardLikeButtonClassName = `card__like-button ${
     isLiked ? "card__like-button_black" : ""
   }`;
 
+  console.log(1, card.likes);
+  console.log(currentUser.user._id);
   return (
     <div className="card">
       <img

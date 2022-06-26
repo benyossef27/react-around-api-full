@@ -154,7 +154,8 @@ export default function App() {
   }, []);
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((user) => user._id === currentUser._id);
+    const isLiked = card.likes.some((like) => like === currentUser.user._id);
+    console.log(card);
     api
       .changeLikeCardStatus(card, !isLiked)
       .then((newCard) => {
