@@ -12,6 +12,7 @@ const auth = require('./middleware/auth');
 
 const { limiter } = require('./helpers/limiter');
 const NotFoundError = require('./errors/not-found-err');
+const centralErrorHandler = require('./errors/centrelizedEror');
 
 const { PORT = 3000 } = process.env;
 
@@ -48,15 +49,12 @@ app.use(auth);
 app.use('/users', userRouter);
 app.use('/cards', cardsRouter);
 app.get('*', () => {
-  throw new NotFoundError();
+  throw new Error();
 });
 app.use(errors());
 app.use(errorLogger);
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res.status(statusCode).send({
-    message: statusCode === 500 ? 'An error occurred on the server' : message,
-  });
+  centralErrorHandler(err, res);
 });
 app.listen(PORT, () => {
   console.log(`App listening at port ${PORT}`);

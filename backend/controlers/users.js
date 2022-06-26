@@ -48,27 +48,9 @@ module.exports.createUser = (req, res, next) => {
     )
     .then((user) => res.status(201).send({ user }))
     .catch((err) => {
-      err.status(409).send(err, { message: 'user already exists ' });
-      next(() => {
-        throw new AuthError();
-      });
+      next(err);
     });
 };
-// module.exports.createUser = (req, res, next) => {
-//   const { name, about, avatar } = req.body;
-//   let email;
-//   if (!req.body.email) {
-//     email = null;
-//   } else {
-//     email = req.body.email;
-//   }
-//   bcrypt
-//     .hash(req.body.password, 10)
-//     .then(() => User.create({ name, about, avatar, email, password }))
-//     .then((user) => res.status(201).send({ _id: user._id }))
-//     .catch((err) => res.status(400).send(err))
-//     .catch(next);
-// };
 
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
