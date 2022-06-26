@@ -44,5 +44,14 @@ userRouter.patch(
   updateAvatar
 );
 
-userRouter.post('/', validator.isEmail(req.body.email), createUser);
+userRouter.post(
+  '/',
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().required().email(),
+      password: Joi.string().min(8).alphanum().required(),
+    }),
+  }),
+  createUser
+);
 module.exports = userRouter;
