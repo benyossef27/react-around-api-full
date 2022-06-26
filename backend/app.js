@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 require('dotenv').config();
 const helmet = require('helmet');
 const { errors } = require('celebrate');
@@ -9,7 +8,7 @@ const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controlers/users');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
-
+const cors = require('cors');
 const { limiter } = require('./helpers/limiter');
 
 const { PORT = 3000 } = process.env;
