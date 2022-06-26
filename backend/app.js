@@ -29,7 +29,7 @@ app.post(
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
-      password: Joi.string().min(8).alphanum().required(),
+      password: Joi.string().min(4).alphanum().required(),
     }),
   }),
   login
@@ -39,7 +39,7 @@ app.post(
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
-      password: Joi.string().min(8).alphanum().required(),
+      password: Joi.string().min(4).alphanum().required(),
     }),
   }),
   createUser
