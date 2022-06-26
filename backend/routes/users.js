@@ -7,6 +7,7 @@ const {
   updateUser,
   updateAvatar,
   getCurrentUser,
+  createUser,
 } = require('../controlers/users');
 
 const validateURL = (value, helpers) => {
@@ -16,14 +17,14 @@ const validateURL = (value, helpers) => {
   return helpers.error('string.uri');
 };
 
-userRouter.get('/users', getUsers);
+userRouter.get('/', getUsers);
 
-userRouter.get('/users/me', getCurrentUser);
+userRouter.get('/me', getCurrentUser);
 
-userRouter.get('/users/:id', getUser);
+userRouter.get('/:id', getUser);
 
 userRouter.patch(
-  '/users/me',
+  '/me',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(30),
@@ -34,7 +35,7 @@ userRouter.patch(
 );
 
 userRouter.patch(
-  '/users/me/avatar',
+  '/me/avatar',
   celebrate({
     body: Joi.object().keys({
       avatar: Joi.string().required().custom(validateURL),
@@ -43,4 +44,5 @@ userRouter.patch(
   updateAvatar
 );
 
+userRouter.post('/', createUser);
 module.exports = userRouter;

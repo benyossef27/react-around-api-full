@@ -27,18 +27,12 @@ app.post('/signin', login);
 app.post('/signup', createUser);
 app.use(auth);
 app.use('/users', userRouter);
-app.get('/users/me', userRouter);
-app.get('/users', userRouter);
-app.post('/users', userRouter);
 app.post('/cards', cardsRouter);
 app.delete('/cards/:cardsId', cardsRouter);
 app.get('/cards', cardsRouter);
-app.get('/users/:id', userRouter);
 app.get('*', (req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });
 });
-app.patch('/users/me', userRouter);
-app.patch('/users/me/avatar', userRouter);
 app.put('/cards/:cardId/likes', cardsRouter);
 app.delete('/cards/:cardId/likes', cardsRouter);
 app.use(errorLogger);
