@@ -65,8 +65,8 @@ module.exports.updateUser = (req, res, next) => {
 };
 
 module.exports.updateAvatar = (req, res, next) => {
-  const { avatar } = req.body;
-  User.findOneAndUpdate(req.user._id, { avatar }, options)
+  const avatar = req.body;
+  User.findOneAndUpdate(req.user._id, avatar, options)
     .then((user) => {
       if (!user) {
         throw new Errors(404, 'No user found with that id');

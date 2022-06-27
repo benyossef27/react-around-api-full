@@ -67,9 +67,13 @@ export default function App() {
     setEditProfileButton("saving...");
     api
       .setUserInfo({ name, about })
-      .then((info) => {
-        setCurrentUser(info);
-        console.log(info);
+      .then((res) => {
+        setCurrentUser({
+          ...currentUser,
+          name: res.name,
+          about: res.about,
+        });
+        console.log(res);
         closeAllPopups();
       })
       .catch((err) => {
@@ -80,8 +84,11 @@ export default function App() {
     setEditAvatarButton("saving...");
     api
       .setUserAvatar(avatar)
-      .then((info) => {
-        setCurrentUser(info);
+      .then((res) => {
+        setCurrentUser({
+          ...currentUser,
+          avatar: res.avatar,
+        });
         closeAllPopups();
       })
       .catch((err) => {
@@ -153,7 +160,7 @@ export default function App() {
     document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
   }, []);
-
+  console.log(currentUser);
   function handleCardLike(card) {
     const isLiked = card.likes.some((like) => like === currentUser._id);
 
