@@ -79,7 +79,7 @@ module.exports.updateAvatar = (req, res, next) => {
 };
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  return User.findUserByCredentials(email, password)
+  User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
@@ -88,7 +88,7 @@ module.exports.login = (req, res, next) => {
           expiresIn: '7d',
         }
       );
-      res.send({ token }, user);
+      res.send({ token });
     })
     .catch((err) => {
       next(err);
