@@ -8,7 +8,6 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const options = { runValidators: true, new: true };
 module.exports.getUser = (req, res, next) => {
   User.findById(req.params.id)
-    .select('+password')
     .then((user) => {
       if (!user) {
         throw new Errors(404, 'No user found with that id');
@@ -22,13 +21,13 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .select('+password')
     .then((users) => res.send({ users }))
     .catch((err) => next(err));
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar, email, password: hash } = req.body;
+  const { name, about, avatar } = req.body;
+  let email;
   if (!validator.isEmail(req.body.email)) {
     email = null;
   } else {
@@ -54,7 +53,6 @@ module.exports.createUser = (req, res, next) => {
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
   User.findOneAndUpdate(req.user._id, { name, about }, options)
-    .select('+password')
     .then((user) => {
       if (!user) {
         throw new Errors(404, 'No user found with that id');
@@ -69,7 +67,6 @@ module.exports.updateUser = (req, res, next) => {
 module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findOneAndUpdate(req.user._id, { avatar }, options)
-    .select('+password')
     .then((user) => {
       if (!user) {
         throw new Errors(404, 'No user found with that id');
