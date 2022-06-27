@@ -209,6 +209,7 @@ export default function App() {
     authorize(values)
       .then((res) => {
         if (res) {
+          console.log(res);
           setValues(res.email);
           setIsLoggedIn(true);
           setToken(res.token);
