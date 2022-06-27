@@ -17,7 +17,7 @@ module.exports.deleteCard = (req, res, next) => {
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.send({ cards }))
+    .then((cards) => res.send(cards))
     .catch((err) => next(err));
 };
 
@@ -26,7 +26,7 @@ module.exports.createCard = (req, res, next) => {
   const owner = req.user._id;
 
   Card.create({ name, link, owner })
-    .then((card) => res.status(201).send({ card }))
+    .then((card) => res.status(201).send(card))
     .catch((err) => {
       next(err);
     });
@@ -42,7 +42,7 @@ module.exports.likeCard = (req, res, next) => {
       if (!card) {
         throw new Errors(404, 'Card not found');
       }
-      res.send({ card });
+      res.send(card);
     })
     .catch((err) => {
       next(err);
@@ -58,7 +58,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         throw new Errors(404, 'Card not found');
       }
-      res.send({ card });
+      res.send(card);
     })
     .catch((err) => {
       next(err);
