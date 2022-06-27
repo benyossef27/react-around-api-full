@@ -68,7 +68,8 @@ export default function App() {
     api
       .setUserInfo({ name, about })
       .then((info) => {
-        setCurrentUser(info);
+        // setCurrentUser(info);
+        console.log(info);
         closeAllPopups();
       })
       .catch((err) => {
