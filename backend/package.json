@@ -1,7 +1,7 @@
 {
-  "name": "around-express",
+  "name": "react-around-api-full",
   "version": "1.0.0",
-  "description": "around the US back end",
+  "description": "react-around-api-full",
   "main": "app.js",
   "scripts": {
     "start": "app.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benyossef27/around-express.git"
+    "url": "git+https://github.com/benyossef27/react-around-api-full.git"
   },
   "author": "Benyo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/benyossef27/around-express/issues"
+    "url": "https://github.com/benyossef27/react-around-api-full/issues"
   },
-  "homepage": "https://github.com/benyossef27/around-express#readme",
+  "homepage": "https://github.com/benyossef27/react-around-api-full#readme",
   "devDependencies": {
     "eslint": "^8.15.0",
     "nodemon": "^2.0.16"
