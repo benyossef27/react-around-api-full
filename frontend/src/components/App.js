@@ -42,6 +42,32 @@ export default function App() {
   });
   const navigate = useNavigate();
 
+  function handleLogin(values) {
+    authorize(values)
+      .then((res) => {
+        if (res) {
+          console.log(res);
+          setValues(values.email);
+          setIsLoggedIn(true);
+          setToken(res.token);
+          setCurrentUser({
+            ...currentUser,
+            email: values.email,
+            name: res.name,
+            about: res.about,
+            avatar: res.avatar,
+          });
+          navigate("/");
+        } else {
+          setIsInfoToolTipOpen(true);
+          throw new Error("No token received from backend");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsInfoToolTipOpen(true);
+      });
+  }
   function handleEditProfileClick() {
     setEditProfileButton("save");
     setIsEditProfilePopupOpen(true);
@@ -160,7 +186,7 @@ export default function App() {
     document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
   }, []);
-  console.log(currentUser);
+
   function handleCardLike(card) {
     const isLiked = card.likes.some((like) => like === currentUser._id);
 
@@ -211,26 +237,6 @@ export default function App() {
   }
 
   const [token, setToken] = useState(localStorage.getItem("token"));
-
-  function handleLogin(values) {
-    authorize(values)
-      .then((res) => {
-        if (res) {
-          setValues(values.email);
-          setIsLoggedIn(true);
-          setToken(res.token);
-          setCurrentUser(values);
-          navigate("/");
-        } else {
-          setIsInfoToolTipOpen(true);
-          throw new Error("No token received from backend");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsInfoToolTipOpen(true);
-      });
-  }
 
   function handleCheckToken() {
     if (token) {
