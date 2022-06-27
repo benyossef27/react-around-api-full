@@ -68,7 +68,7 @@ export default function App() {
     api
       .setUserInfo({ name, about })
       .then((info) => {
-        // setCurrentUser(info);
+        setCurrentUser(info);
         console.log(info);
         closeAllPopups();
       })
@@ -81,7 +81,7 @@ export default function App() {
     api
       .setUserAvatar(avatar)
       .then((info) => {
-        setCurrentUser(info);
+        // setCurrentUser(info);
         closeAllPopups();
       })
       .catch((err) => {
@@ -213,6 +213,7 @@ export default function App() {
           setValues(res.email);
           setIsLoggedIn(true);
           setToken(res.token);
+          setCurrentUser(values);
           navigate("/");
         } else {
           setIsInfoToolTipOpen(true);

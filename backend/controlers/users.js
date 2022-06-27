@@ -57,7 +57,7 @@ module.exports.updateUser = (req, res, next) => {
       if (!user) {
         throw new Errors(404, 'No user found with that id');
       }
-      res.send({ user });
+      res.send(user);
     })
     .catch((err) => {
       next(err);
