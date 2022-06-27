@@ -210,7 +210,7 @@ export default function App() {
       .then((res) => {
         if (res) {
           console.log(res);
-          setValues(res.email);
+          setValues(values.email);
           setIsLoggedIn(true);
           setToken(res.token);
           setCurrentUser(values);
