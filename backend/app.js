@@ -14,7 +14,7 @@ const Errors = require('./errors/errors');
 const { limiter } = require('./helpers/limiter');
 const centralErrorHandler = require('./errors/centrelizedEror');
 
-const { PORT = 3008 } = process.env;
+const { PORT = 3528 } = process.env;
 
 const app = express();
 app.use(cors());
