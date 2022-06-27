@@ -81,7 +81,7 @@ export default function App() {
     api
       .setUserAvatar(avatar)
       .then((info) => {
-        // setCurrentUser(info);
+        setCurrentUser(info);
         closeAllPopups();
       })
       .catch((err) => {
@@ -244,11 +244,13 @@ export default function App() {
   }
 
   useEffect(handleCheckToken, [navigate, token]);
+
   function handleLogout(e) {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     setToken(null);
     setValues("");
+    setCurrentUser({});
     navigate("/signin");
   }
 
