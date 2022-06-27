@@ -189,8 +189,8 @@ export default function App() {
 
   function handleRegitrationSubmit(values) {
     register(values)
-      .then(() => {
-        navigate("./signin");
+      .then((res) => {
+        navigate("/signin");
         setRegistered(true);
       })
       .catch((err) => {
@@ -228,7 +228,7 @@ export default function App() {
       localStorage.setItem("token", token);
       getContent(token)
         .then((res) => {
-          setValues(res.user.email);
+          setValues(res.email);
           setIsLoggedIn(true);
           navigate("/");
         })
