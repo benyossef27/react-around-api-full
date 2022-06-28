@@ -88,6 +88,7 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
+  const { _id: id } = req.user;
   User.findByIdAndUpdate(req.user._id, { name, about }, options)
     .then((user) => {
       if (!user) {
@@ -102,6 +103,7 @@ module.exports.updateUser = (req, res, next) => {
 
 module.exports.updateAvatar = (req, res, next) => {
   const avatar = req.body;
+  const { _id: id } = req.user;
   User.findByIdAndUpdate(req.user._id, avatar, options)
     .then((user) => {
       if (!user) {
