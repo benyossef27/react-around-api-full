@@ -243,11 +243,7 @@ export default function App() {
           setValues(res.email);
           setCurrentUser({
             ...currentUser,
-            email: res.email,
-            name: res.name,
-            about: res.about,
-            avatar: res.avatar,
-            _id: res._id,
+            ...res,
           });
           setIsLoggedIn(true);
           navigate("/");
