@@ -46,7 +46,6 @@ export default function App() {
     authorize(values)
       .then((res) => {
         if (res) {
-          console.log("login", res);
           setValues(res.email);
           setIsLoggedIn(true);
           setToken(res.token);
@@ -74,7 +73,6 @@ export default function App() {
           ...currentUser,
           ...res,
         });
-        console.log("updatUser", res);
         closeAllPopups();
       })
       .catch((err) => {
@@ -107,7 +105,6 @@ export default function App() {
     api
       .setUserAvatar(avatar)
       .then((res) => {
-        console.log("avatar", res);
         setCurrentUser({
           ...currentUser,
           avatar: res.avatar,
@@ -123,7 +120,6 @@ export default function App() {
     api
       .createCard(info)
       .then((res) => {
-        console.log("cardcreat", res);
         setCards([res.card, ...cards]);
         closeAllPopups();
       })
@@ -145,7 +141,6 @@ export default function App() {
       .getUserInfo()
       .then((userData) => {
         setCurrentUser(userData);
-        console.log("info", userData);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
@@ -167,7 +162,6 @@ export default function App() {
     api
       .getInitialCards()
       .then((res) => {
-        console.log("initials", res);
         setCards(res.cards, ...cards);
       })
       .catch((err) => {
@@ -195,7 +189,6 @@ export default function App() {
     api
       .changeLikeCardStatus(card, !isLiked)
       .then((newCard) => {
-        console.log("cahnge like", newCard);
         setCards((state) =>
           state.map((currentCard) =>
             currentCard._id === card ? newCard : currentCard
@@ -211,7 +204,6 @@ export default function App() {
     api
       .deleteCard(card._id)
       .then((res) => {
-        console.log("deletecard", res);
         setCards(cards.filter((deleted) => deleted._id !== card._id));
         closeAllPopups();
       })
@@ -228,7 +220,6 @@ export default function App() {
   function handleRegitrationSubmit(values) {
     register(values)
       .then((res) => {
-        console.log("signup", res);
         navigate("/signin");
         setRegistered(true);
       })
@@ -285,7 +276,6 @@ export default function App() {
       _id: "",
     });
     navigate("/signin");
-    console.log("logout", token, isLoggedIn, values, currentUser);
   }
 
   return loading ? (
