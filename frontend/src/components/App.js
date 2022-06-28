@@ -41,6 +41,7 @@ export default function App() {
     password: "",
   });
   const navigate = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   function handleLogin(values) {
     authorize(values)
@@ -241,8 +242,6 @@ export default function App() {
       });
   }
 
-  const [token, setToken] = useState(localStorage.getItem("token"));
-
   function handleCheckToken() {
     if (token) {
       localStorage.setItem("token", token);
@@ -252,11 +251,7 @@ export default function App() {
           setValues(res.email);
           setCurrentUser({
             ...currentUser,
-            email: res.email,
-            name: res.name,
-            about: res.about,
-            avatar: res.avatar,
-            _id: res._id,
+            ...res,
           });
           setIsLoggedIn(true);
           navigate("/");
@@ -269,25 +264,25 @@ export default function App() {
     }
   }
 
-  useEffect(handleCheckToken, [navigate, token]);
-
   function handleLogout(e) {
-    localStorage.removeItem("token");
+    localStorage.removeItem("token", token);
     setIsLoggedIn(false);
     setToken(null);
     setValues("");
-    setCurrentUser({
-      ...currentUser,
-      email: "",
-      name: "",
-      about: "",
-      avatar: "",
-      _id: "",
-    });
+
+    // setCurrentUser({
+    //   ...currentUser,
+    //   email: "",
+    //   name: "",
+    //   about: "",
+    //   avatar: "",
+    //   _id: "",
+    // });
     navigate("/signin");
     console.log("logout", token, isLoggedIn, values, currentUser);
+    return localStorage.removeItem("token", token);
   }
-
+  useEffect(handleCheckToken, [navigate, token]);
   return loading ? (
     <div className="page">
       <div className="root">
