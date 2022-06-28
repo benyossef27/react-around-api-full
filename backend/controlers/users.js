@@ -88,8 +88,7 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
-  const { _id: id } = currentUser._id;
-  User.findByIdAndUpdate(id, { name, about }, options)
+  User.findByIdAndUpdate(req.params.id, { name, about }, options)
     .then((user) => {
       if (!user) {
         throw new Errors(404, 'No user found with that id');
@@ -103,8 +102,7 @@ module.exports.updateUser = (req, res, next) => {
 
 module.exports.updateAvatar = (req, res, next) => {
   const avatar = req.body;
-  const { _id: id } = currentUser._id;
-  User.findByIdAndUpdate(id, avatar, options)
+  User.findByIdAndUpdate(req.params.id, avatar, options)
     .then((user) => {
       if (!user) {
         throw new Errors(404, 'No user found with that id');
