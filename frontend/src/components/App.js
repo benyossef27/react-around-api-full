@@ -254,6 +254,13 @@ export default function App() {
         .then((res) => {
           console.log("checktoken", res);
           setValues(res.email);
+          setCurrentUser({
+            ...currentUser,
+            email: res.email,
+            name: res.name,
+            about: res.about,
+            avatar: res.avatar,
+          });
           setIsLoggedIn(true);
           navigate("/");
         })
