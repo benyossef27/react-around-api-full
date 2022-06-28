@@ -3,6 +3,17 @@ const bcrypt = require('bcrypt');
 const Errors = require('../errors/errors');
 
 const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    select: false,
+  },
   name: {
     type: String,
     minlength: 2,
@@ -24,17 +35,6 @@ const userSchema = new mongoose.Schema({
       message: (props) => `${props.value} is not a valid URL!`,
     },
     default: 'https://pictures.s3.yandex.net/resources/avatar_1604080799.jpg',
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-    select: false,
   },
 });
 
