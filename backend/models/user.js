@@ -36,10 +36,6 @@ const userSchema = new mongoose.Schema({
     },
     default: 'https://pictures.s3.yandex.net/resources/avatar_1604080799.jpg',
   },
-  _id: {
-    type: String,
-    unique: true,
-  },
 });
 
 userSchema.statics.findUserByCredentials = function findUserByCredentials(
