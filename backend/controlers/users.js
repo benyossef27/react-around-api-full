@@ -60,7 +60,7 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar } = req.body;
+  const { name, about, avatar, _id } = req.body;
   let email;
   if (!validator.isEmail(req.body.email)) {
     email = null;
