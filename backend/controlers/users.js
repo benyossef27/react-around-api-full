@@ -36,8 +36,7 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  User.findOne({ email })
-    .select('+password')
+  User.findOne({ email, password })
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
@@ -60,7 +59,7 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar, _id } = req.body;
+  const { name, about, avatar } = req.body;
   let email;
   if (!validator.isEmail(req.body.email)) {
     email = null;
