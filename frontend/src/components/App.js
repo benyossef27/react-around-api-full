@@ -148,7 +148,8 @@ export default function App() {
     api
       .getUserInfo()
       .then((userData) => {
-        setCurrentUser(userData), console.log("info", userData);
+        setCurrentUser(userData);
+        console.log("info", userData);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
@@ -170,7 +171,8 @@ export default function App() {
     api
       .getInitialCards()
       .then((res) => {
-        console.log("initials", res), setCards(res.cards, ...cards);
+        console.log("initials", res);
+        setCards(res.cards, ...cards);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
