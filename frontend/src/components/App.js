@@ -46,7 +46,7 @@ export default function App() {
     authorize(values)
       .then((res) => {
         if (res) {
-          console.log(res);
+          console.log("login", res);
           setValues(values.email);
           setIsLoggedIn(true);
           setToken(res.token);
@@ -99,7 +99,7 @@ export default function App() {
           name: res.name,
           about: res.about,
         });
-        console.log(res);
+        console.log("updatUser", res);
         closeAllPopups();
       })
       .catch((err) => {
@@ -111,6 +111,7 @@ export default function App() {
     api
       .setUserAvatar(avatar)
       .then((res) => {
+        console.log("avatar", res);
         setCurrentUser({
           ...currentUser,
           avatar: res.avatar,
@@ -126,6 +127,7 @@ export default function App() {
     api
       .createCard(info)
       .then((res) => {
+        console.log("cardcreat", res);
         setCards([res.card, ...cards]);
         closeAllPopups();
       })
@@ -145,7 +147,9 @@ export default function App() {
   useEffect(() => {
     api
       .getUserInfo()
-      .then((userData) => setCurrentUser(userData))
+      .then((userData) => {
+        setCurrentUser(userData), console.log("info", userData);
+      })
       .catch((err) => {
         console.log(`Error: ${err}`);
       });
@@ -166,7 +170,7 @@ export default function App() {
     api
       .getInitialCards()
       .then((res) => {
-        setCards(res.cards, ...cards);
+        console.log("initials", res), setCards(res.cards, ...cards);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
@@ -193,6 +197,7 @@ export default function App() {
     api
       .changeLikeCardStatus(card, !isLiked)
       .then((newCard) => {
+        console.log("cahnge like", newCard);
         setCards((state) =>
           state.map((currentCard) =>
             currentCard._id === card ? newCard : currentCard
@@ -207,7 +212,8 @@ export default function App() {
     setEditDeleteCardButton("deleteing...");
     api
       .deleteCard(card._id)
-      .then(() => {
+      .then((res) => {
+        console.log("deletecard", res);
         setCards(cards.filter((deleted) => deleted._id !== card._id));
         closeAllPopups();
       })
@@ -224,6 +230,7 @@ export default function App() {
   function handleRegitrationSubmit(values) {
     register(values)
       .then((res) => {
+        console.log("signup", res);
         navigate("/signin");
         setRegistered(true);
       })
@@ -243,6 +250,7 @@ export default function App() {
       localStorage.setItem("token", token);
       getContent(token)
         .then((res) => {
+          console.log("checktoken", res);
           setValues(res.email);
           setIsLoggedIn(true);
           navigate("/");
@@ -264,6 +272,7 @@ export default function App() {
     setValues("");
     setCurrentUser({});
     navigate("/signin");
+    console.log("logout", token, isLoggedIn, values, currentUser);
   }
 
   return loading ? (

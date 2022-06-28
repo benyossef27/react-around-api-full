@@ -13,7 +13,6 @@ module.exports.getUser = (req, res, next) => {
         throw new Errors(404, 'No user found with that id');
       }
       res.send({ user });
-      console.log(user);
     })
     .catch((err) => {
       next(err);
@@ -46,7 +45,7 @@ module.exports.createUser = (req, res, next) => {
       })
     )
     .then((user) => {
-      res.status(201).send(user), console.log(user);
+      res.status(201).send(user);
     })
     .catch((err) => {
       next(err);
@@ -61,7 +60,6 @@ module.exports.updateUser = (req, res, next) => {
         throw new Errors(404, 'No user found with that id');
       }
       res.send(user);
-      console.log(user);
     })
     .catch((err) => {
       next(err);
@@ -76,7 +74,6 @@ module.exports.updateAvatar = (req, res, next) => {
         throw new Errors(404, 'No user found with that id');
       }
       res.send(user);
-      console.log(user);
     })
     .catch((err) => {
       next(err);
@@ -86,7 +83,6 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
-      console.log(user);
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
@@ -95,7 +91,6 @@ module.exports.login = (req, res, next) => {
         }
       );
       res.send({ token });
-      console.log(token);
     })
     .catch((err) => {
       next(err);
@@ -109,7 +104,6 @@ module.exports.getCurrentUser = (req, res, next) => {
         throw new Errors(404, 'No user found with that id');
       }
       res.send(user);
-      console.log(user);
     })
     .catch((err) => {
       next(err);
