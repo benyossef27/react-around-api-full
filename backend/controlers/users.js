@@ -13,6 +13,7 @@ module.exports.getUser = (req, res, next) => {
         throw new Errors(404, 'No user found with that id');
       }
       res.send({ user });
+      console.log(user);
     })
     .catch((err) => {
       next(err);
@@ -44,7 +45,9 @@ module.exports.createUser = (req, res, next) => {
         password,
       })
     )
-    .then((user) => res.status(201).send(user))
+    .then((user) => {
+      res.status(201).send(user), console.log(user);
+    })
     .catch((err) => {
       next(err);
     });
@@ -58,6 +61,7 @@ module.exports.updateUser = (req, res, next) => {
         throw new Errors(404, 'No user found with that id');
       }
       res.send(user);
+      console.log(user);
     })
     .catch((err) => {
       next(err);
@@ -72,6 +76,7 @@ module.exports.updateAvatar = (req, res, next) => {
         throw new Errors(404, 'No user found with that id');
       }
       res.send(user);
+      console.log(user);
     })
     .catch((err) => {
       next(err);
@@ -90,6 +95,7 @@ module.exports.login = (req, res, next) => {
         }
       );
       res.send({ token });
+      console.log(token);
     })
     .catch((err) => {
       next(err);
@@ -103,6 +109,7 @@ module.exports.getCurrentUser = (req, res, next) => {
         throw new Errors(404, 'No user found with that id');
       }
       res.send(user);
+      console.log(user);
     })
     .catch((err) => {
       next(err);
