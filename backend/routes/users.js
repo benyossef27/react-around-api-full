@@ -7,6 +7,7 @@ const {
   updateUser,
   updateAvatar,
   getCurrentUser,
+  createUser,
 } = require('../controlers/users');
 
 const validateURL = (value, helpers) => {
@@ -42,5 +43,16 @@ userRouter.patch(
   }),
   updateAvatar
 );
+
+// userRouter.post(
+//   '/',
+//   celebrate({
+//     body: Joi.object().keys({
+//       email: Joi.string().required().email(),
+//       password: Joi.string().min(8).alphanum().required(),
+//     }),
+//   }),
+//   createUser
+// );
 
 module.exports = userRouter;
