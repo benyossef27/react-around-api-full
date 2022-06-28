@@ -260,6 +260,7 @@ export default function App() {
             name: res.name,
             about: res.about,
             avatar: res.avatar,
+            _id: res._id,
           });
           setIsLoggedIn(true);
           navigate("/");
@@ -279,7 +280,14 @@ export default function App() {
     setIsLoggedIn(false);
     setToken(null);
     setValues("");
-    setCurrentUser({});
+    setCurrentUser({
+      ...currentUser,
+      email: "",
+      name: "",
+      about: "",
+      avatar: "",
+      _id: "",
+    });
     navigate("/signin");
     console.log("logout", token, isLoggedIn, values, currentUser);
   }
