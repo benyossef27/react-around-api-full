@@ -47,15 +47,12 @@ export default function App() {
       .then((res) => {
         if (res) {
           console.log("login", res);
-          setValues(values.email);
+          setValues(res.email);
           setIsLoggedIn(true);
           setToken(res.token);
           setCurrentUser({
             ...currentUser,
-            email: values.email,
-            name: res.name,
-            about: res.about,
-            avatar: res.avatar,
+            ...res,
           });
           navigate("/");
         } else {
@@ -66,6 +63,22 @@ export default function App() {
       .catch((err) => {
         console.log(err);
         setIsInfoToolTipOpen(true);
+      });
+  }
+  function handleUpdateUser({ name, about }) {
+    setEditProfileButton("saving...");
+    api
+      .setUserInfo({ name, about })
+      .then((res) => {
+        setCurrentUser({
+          ...currentUser,
+          ...res,
+        });
+        console.log("updatUser", res);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Error: ${err}`);
       });
   }
   function handleEditProfileClick() {
@@ -89,23 +102,6 @@ export default function App() {
     setSelectedCard(card);
   }
 
-  function handleUpdateUser({ name, about }) {
-    setEditProfileButton("saving...");
-    api
-      .setUserInfo({ name, about })
-      .then((res) => {
-        setCurrentUser({
-          ...currentUser,
-          name: res.name,
-          about: res.about,
-        });
-        console.log("updatUser", res);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(`Error: ${err}`);
-      });
-  }
   function handleUpdateAvatar({ avatar }) {
     setEditAvatarButton("saving...");
     api
