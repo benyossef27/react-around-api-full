@@ -9,8 +9,8 @@ const userRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controlers/users');
 const { requestLogger, errorLogger } = require('./middleware/logger');
-const auth = require('./middleware/auth');
 const Errors = require('./errors/errors');
+const auth = require('./middleware/auth');
 
 const centralErrorHandler = require('./errors/centrelizedEror');
 
@@ -28,6 +28,7 @@ app.use(requestLogger);
 app.use(limiter);
 app.post(
   '/signin',
+  auth,
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
