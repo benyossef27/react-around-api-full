@@ -42,28 +42,6 @@ export default function App() {
   });
   const navigate = useNavigate();
 
-  function handleLogin(values) {
-    authorize(values)
-      .then((res) => {
-        if (res) {
-          setValues(res.email);
-          setIsLoggedIn(true);
-          setToken(res.token);
-          setCurrentUser({
-            ...currentUser,
-            ...res,
-          });
-          navigate("/");
-        } else {
-          setIsInfoToolTipOpen(true);
-          throw new Error("No token received from backend");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsInfoToolTipOpen(true);
-      });
-  }
   function handleUpdateUser({ name, about }) {
     setEditProfileButton("saving...");
     api
@@ -239,7 +217,6 @@ export default function App() {
       localStorage.setItem("token", token);
       getContent(token)
         .then((res) => {
-          console.log("checktoken", res);
           setValues(res.email);
           setCurrentUser({
             ...currentUser,
@@ -258,8 +235,27 @@ export default function App() {
 
   useEffect(handleCheckToken, [navigate, token]);
 
+  function handleLogin(values) {
+    authorize(values)
+      .then((res) => {
+        if (res) {
+          setValues(res.email);
+          setIsLoggedIn(true);
+          setToken(res.token);
+          navigate("/");
+        } else {
+          setIsInfoToolTipOpen(true);
+          throw new Error("No token received from backend");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsInfoToolTipOpen(true);
+      });
+  }
+
   function handleLogout(e) {
-    localStorage.removeItem("token");
+    localStorage.removeItem("token", "jwt");
     setIsLoggedIn(false);
     setToken(null);
     setValues("");
