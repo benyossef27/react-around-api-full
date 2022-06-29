@@ -28,7 +28,6 @@ app.use(requestLogger);
 app.use(limiter);
 app.post(
   '/signin',
-  auth,
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
@@ -48,8 +47,8 @@ app.post(
   createUser
 );
 
-app.use('/users', userRouter);
-app.use('/cards', cardsRouter);
+app.use('/users', auth, userRouter);
+app.use('/cards', auth, cardsRouter);
 app.get('*', () => {
   throw new Errors();
 });
