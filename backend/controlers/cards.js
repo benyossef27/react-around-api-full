@@ -9,10 +9,11 @@ module.exports.deleteCard = (req, res, next) => {
     .then((card) => {
       if (card.owner.valueOf() !== req.user._id) {
         next(new ForbiddenError('Only the owner of the card can delete it'));
-      } else
+      } else {
         Card.findOneAndDelete(req.params.cardId)
           .then((deletedCard) => res.send({ data: deletedCard }))
           .catch(next);
+      }
     });
 };
 
