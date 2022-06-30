@@ -3,6 +3,9 @@ const bcrypt = require('bcrypt');
 const validator = require('validator');
 const User = require('../models/user');
 const Errors = require('../errors/errors');
+const NotFoundError = require('../errors/not-found-err');
+const AuthError = require('../errors/auth-err');
+const ServerError = require('../errors/server-err');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -10,53 +13,51 @@ const options = { runValidators: true, new: true };
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
+    .orFail(() => new NotFoundError("can't find this user"))
     .then((user) => {
-      if (!user) {
-        throw new Errors(404, 'No user found with that id');
-      }
       res.send(user);
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
 
 module.exports.getUser = (req, res, next) => {
   User.findById(req.params.id)
+    .orFail(() => new NotFoundError("can't find this user"))
     .then((user) => {
-      if (!user) {
-        throw new Errors(404, 'No user found with that id');
-      }
       res.send({ user });
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
 
 module.exports.login = (req, res, next) => {
   const { email } = req.body;
   User.findOne({ email })
     .select('+password')
+    .orFail(() => new AuthError('Incorrect email or password.'))
     .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-        {
-          expiresIn: '7d',
+      bcrypt.compare(password, user.password).then((match) => {
+        if (!match) {
+          next(AuthError('Incorrect email or password.'));
+        } else {
+          const token = jwt.sign(
+            { _id: user._id },
+            NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+            {
+              expiresIn: '7d',
+            }
+          );
+          res.send({ token });
         }
-      );
-      res.send({ token });
+      });
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
+    .orFail(() => new NotFoundError("can't find user"))
     .then((users) => res.send({ users }))
-    .catch((err) => next(err));
+    .catch(next);
 };
 
 module.exports.createUser = (req, res, next) => {
@@ -78,40 +79,33 @@ module.exports.createUser = (req, res, next) => {
         password,
       })
     )
+    .orFail(() => ServerError("Cna't create user, please try again later"))
     .then((user) => {
       res.status(201).send(user._id);
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
 
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
   const { _id: id } = req.user;
   User.findByIdAndUpdate(id, { name, about }, options)
+    .orFail(() => new NotFoundError("Can't update this user, id not found"))
     .then((user) => {
-      if (!user) {
-        throw new Errors(404, 'No user found with that id');
-      }
       res.send(user);
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
 
 module.exports.updateAvatar = (req, res, next) => {
   const avatar = req.body;
   const { _id: id } = req.user;
   User.findByIdAndUpdate(id, avatar, options)
+    .orFail(
+      () => new NotFoundError("Can't update this avatar, user id not found")
+    )
     .then((user) => {
-      if (!user) {
-        throw new Errors(404, 'No user found with that id');
-      }
       res.send(user);
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
