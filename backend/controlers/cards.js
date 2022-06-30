@@ -1,4 +1,3 @@
-const Errors = require('../errors/errors');
 const ForbiddenError = require('../errors/forbidden-err');
 const NotFoundError = require('../errors/not-found-err');
 const ServerError = require('../errors/server-err');
@@ -39,9 +38,7 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } },
     { new: true }
   )
-    .orFail(() => {
-      new NotFoundError('Card id not found.');
-    })
+    .orFail(() => new NotFoundError('Card id not found.'))
     .then((card) => {
       res.send({ card });
     })
@@ -54,9 +51,7 @@ module.exports.dislikeCard = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true }
   )
-    .orFail(() => {
-      new NotFoundError('Card id not found.');
-    })
+    .orFail(() => new NotFoundError('Card id not found.'))
     .then((card) => {
       res.send({ card });
     })

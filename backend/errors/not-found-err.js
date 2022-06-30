@@ -1,4 +1,4 @@
-class ServerError extends Error {
+class NotFoundError extends Error {
   constructor(message) {
     super(message);
 
@@ -6,4 +6,4 @@ class ServerError extends Error {
   }
 }
 
-module.exports = ServerError;
+module.exports = NotFoundError;

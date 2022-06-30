@@ -9,10 +9,10 @@ const userRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controlers/users');
 const { requestLogger, errorLogger } = require('./middleware/logger');
-const Errors = require('./errors/errors');
 const auth = require('./middleware/auth');
 
 const centralErrorHandler = require('./errors/centrelizedEror');
+const NotFoundError = require('../../../Downloads/react-around-api-full-main/react-around-api-full-main/backend/utils/notfounderror');
 
 const { PORT = 3000 } = process.env;
 
@@ -50,12 +50,12 @@ app.post(
 app.use('/users', auth, userRouter);
 app.use('/cards', auth, cardsRouter);
 app.get('*', () => {
-  throw new Errors();
+  new NotFoundError('Requested resource not found');
 });
 app.use(errors());
 app.use(errorLogger);
 app.use((err, req, res, next) => {
-  centralErrorHandler(err, res);
+  new centralErrorHandler(err, res);
 });
 app.listen(PORT, () => {
   console.log(`App listening at port ${PORT}`);

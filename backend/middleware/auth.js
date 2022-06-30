@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
   }
 
   const token = authorization.replace('Bearer ', '');
-  let payload;
+  const payload;
 
   payload = jwt.verify(
     token,

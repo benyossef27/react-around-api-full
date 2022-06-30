@@ -2,10 +2,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const User = require('../models/user');
-const Errors = require('../errors/errors');
-const NotFoundError = require('../errors/not-found-err');
 const AuthError = require('../errors/auth-err');
 const ServerError = require('../errors/server-err');
+const NotFoundError = require('../errors/not-found-err');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -31,7 +30,7 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email } = req.body;
-  User.findOne({ email })
+  User.findOne({ email, password })
     .select('+password')
     .orFail(() => new AuthError('Incorrect email or password.'))
     .then((user) => {
