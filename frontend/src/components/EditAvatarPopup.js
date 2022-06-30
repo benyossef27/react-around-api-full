@@ -1,8 +1,10 @@
 import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useFormAndValidation } from "../utils/useFormAndValidation";
 import PopupWithForm from "./PopupWithForm";
 
 export default function EditAvatarPopup(props) {
+  const currentUser = React.useContext(CurrentUserContext);
   const { inputs, handleChange, errors, isValid, resetForm } =
     useFormAndValidation();
 
