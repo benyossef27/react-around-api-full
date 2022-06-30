@@ -1,6 +1,5 @@
 const ForbiddenError = require('../errors/forbidden-err');
 const NotFoundError = require('../errors/not-found-err');
-const ServerError = require('../errors/server-err');
 const Card = require('../models/card');
 
 module.exports.deleteCard = (req, res, next) => {

@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const validator = require('validator');
 const User = require('../models/user');
 const AuthError = require('../errors/auth-err');
-const ServerError = require('../errors/server-err');
 const NotFoundError = require('../errors/not-found-err');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
