@@ -12,6 +12,7 @@ export async function checkRes(res) {
 }
 
 export async function register(email, password) {
+  console.log(JSON.stringify(email, password));
   const response = await fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {

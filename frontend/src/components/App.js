@@ -197,7 +197,7 @@ export default function App() {
 
   function handleRegitrationSubmit(values) {
     register(values)
-      .then(() => {
+      .then((res) => {
         navigate("/signin");
         setRegistered(true);
       })
