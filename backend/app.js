@@ -10,7 +10,7 @@ const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controlers/users');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
-const CentralErrorHandler = require('./errors/centrelizedEror');
+const ServerError = require('./errors/server-err');
 
 const { PORT = 3000 } = process.env;
 
@@ -54,7 +54,9 @@ app.get('*', () => {
 });
 app.use(errors());
 app.use(errorLogger);
-app.use((err, req, res, next) => next(new CentralErrorHandler(err, res)));
+app.use((err, req, res, next) =>
+  next(new ServerError('Internal server error'))
+);
 app.listen(PORT, () => {
   console.log(`App listening at port ${PORT}`);
 });
