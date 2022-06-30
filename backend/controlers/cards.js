@@ -33,9 +33,11 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
+  const { cardId } = req.params;
+  const { _id: userId } = req.user;
   Card.findByIdAndUpdate(
-    req.params.cardId,
-    { $addToSet: { likes: req.user._id } },
+    cardId,
+    { $addToSet: { likes: userId } },
     { new: true }
   )
     .orFail(() => new NotFoundError('Card id not found.'))
@@ -46,9 +48,11 @@ module.exports.likeCard = (req, res, next) => {
 };
 
 module.exports.dislikeCard = (req, res, next) => {
+  const { cardId } = req.params;
+  const { _id: userId } = req.user;
   Card.findByIdAndUpdate(
-    req.params.cardId,
-    { $pull: { likes: req.user._id } },
+    cardId,
+    { $addToSet: { likes: userId } },
     { new: true }
   )
     .orFail(() => new NotFoundError('Card id not found.'))
