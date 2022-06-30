@@ -69,19 +69,18 @@ module.exports.createUser = (req, res, next) => {
   }
   bcrypt
     .hash(req.body.password, 10)
-    .then((hash) =>
+    .then((password) =>
       User.create({
         name,
         about,
         avatar,
         email,
-        password: hash,
+        password,
       })
     )
     .orFail(() => ServerError("Cna't create user, please try again later"))
     .then((user) => {
       res.status(201).send(user);
-      console.log(user);
     })
     .catch(next);
 };
