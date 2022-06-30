@@ -28,7 +28,6 @@ module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .orFail(() => new ServerError("Can't create card, please try again later"))
     .then((card) => res.status(201).send({ card }))
     .catch(next);
 };

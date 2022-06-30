@@ -80,7 +80,6 @@ module.exports.createUser = (req, res, next) => {
     )
     .then((user) => {
       res.status(201).send({ id: user._id });
-      console.log(user);
     })
     .catch(next);
 };
