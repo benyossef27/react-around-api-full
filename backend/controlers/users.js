@@ -68,13 +68,13 @@ module.exports.createUser = (req, res, next) => {
   }
   bcrypt
     .hash(req.body.password, 10)
-    .then((hash) =>
+    .then((password) =>
       User.create({
         name,
         about,
         avatar,
         email,
-        password: hash,
+        password,
       })
     )
     .then((user) => {
