@@ -31,7 +31,7 @@ app.post(
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
-      password: Joi.string().min(4).alphanum().required(),
+      password: Joi.string().min(4).required(),
     }),
   }),
   login
@@ -41,7 +41,7 @@ app.post(
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
-      password: Joi.string().min(4).alphanum().required(),
+      password: Joi.string().min(4).required(),
     }),
   }),
   createUser
