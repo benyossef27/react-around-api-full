@@ -1,4 +1,4 @@
-const centralErrorHandler = (err, res) => {
+const CentralErrorHandler = (err, res) => {
   console.log(err);
   if (err.name === 'ValidationError') {
     res.status(400).send({ message: 'Invalid data' });
@@ -11,4 +11,4 @@ const centralErrorHandler = (err, res) => {
     message: statusCode === 500 ? 'An error occurred on the server' : message,
   });
 };
-module.exports = centralErrorHandler;
+module.exports = CentralErrorHandler;
