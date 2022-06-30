@@ -78,9 +78,8 @@ module.exports.createUser = (req, res, next) => {
         password: hash,
       })
     )
-    .orFail(() => ServerError("Can't create user, please try again later"))
     .then((user) => {
-      res.status(201).send(user);
+      res.status(201).send({ id: user._id });
       console.log(user);
     })
     .catch(next);
