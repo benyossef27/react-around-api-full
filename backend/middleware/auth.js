@@ -9,16 +9,13 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
     next(new AuthError('Authorization Required'));
-    return;
   }
 
   const token = authorization.replace('Bearer ', '');
-  let payload;
-  try {
-    jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
-  } catch (err) {
-    next(new AuthError('Invalid token provided'));
-  }
+  const payload = jwt.verify(
+    token,
+    NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'
+  );
   req.user = payload;
   next();
 };
