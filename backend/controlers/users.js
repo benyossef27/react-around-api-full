@@ -80,7 +80,7 @@ module.exports.createUser = (req, res, next) => {
     )
     .orFail(() => ServerError("Cna't create user, please try again later"))
     .then((user) => {
-      res.status(201).send(user.name);
+      res.status(201).send(user);
       console.log(user);
     })
     .catch(next);
