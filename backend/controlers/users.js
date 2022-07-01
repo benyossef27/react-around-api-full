@@ -59,7 +59,7 @@ module.exports.createUser = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        new ConflictError('Email already exists');
+        next(new ConflictError('Email already exists'));
       } else {
         bcrypt.hash(password, 10);
       }
