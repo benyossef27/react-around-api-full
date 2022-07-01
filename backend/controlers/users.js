@@ -81,7 +81,7 @@ module.exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new AuthError('Invalid email or password'));
+        next(new BadRequestError(`Invalid email or password: ${err.message}`));
       } else {
         next(err);
       }
