@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const validator = require('validator');
 const User = require('../models/user');
 const AuthError = require('../errors/auth-err');
 const NotFoundError = require('../errors/not-found-err');
@@ -56,8 +55,7 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar } = req.body;
-  let email = req.body.email;
+  const { name, about, avatar, email } = req.body;
   User.findOne({ email }).then((user) => {
     if (user) {
       next(new ConflictError('Email already taken'));
