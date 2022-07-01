@@ -56,32 +56,30 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const { name, about, avatar } = req.body;
+  let email;
+  if (!validator.isEmail(req.body.email)) {
+    email = null;
+  } else {
+    email = req.body.email;
+  }
   bcrypt
-    .hash(password, 10)
-    .then((hash) =>
+    .hash(req.body.password, 10)
+    .then((password) =>
       User.create({
         name,
         about,
         avatar,
         email,
-        password: hash,
+        password,
       })
     )
+
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError('Error, please check your data');
-      }
-      User.findOne(user).then((userSafe) =>
-        res.status(StatusCodes.CREATED).send(userSafe)
-      );
+      res.status(201).send({ id: user._id });
     })
     .catch((err) => {
-      if (err.code === 11000)
-        throw new ConflictError(
-          StatusCodes.CONFLICT,
-          'Error, please check your data'
-        );
+      if (err.code === 11000) throw new ConflictError('Email already taken');
       else next(err);
     })
     .catch(next);
