@@ -79,8 +79,7 @@ module.exports.createUser = (req, res, next) => {
       res.status(201).send({ id: user._id });
     })
     .catch((err) => {
-      if (err.code === 11000) new ConflictError('Email already taken');
-      else next(err);
+      new ConflictError('Email already taken');
     })
     .catch(next);
 };
