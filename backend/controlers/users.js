@@ -41,7 +41,9 @@ module.exports.login = (req, res, next) => {
           expiresIn: '7d',
         }
       );
-      res.send({ token });
+      res.send({ token }).catch(() => {
+        next(new AuthError('Incorrect email or password'));
+      });
     })
     .catch(next);
 };
@@ -72,13 +74,11 @@ module.exports.createUser = (req, res, next) => {
         password,
       })
     )
+    .catch(() => {
+      next(new ConflictError('User already exists'));
+    })
     .then((user) => {
-      res
-        .status(201)
-        .send({ id: user._id })
-        .catch(() => {
-          next(new ConflictError('User already exists'));
-        });
+      res.status(201).send({ id: user._id });
     })
     .catch(next);
 };
