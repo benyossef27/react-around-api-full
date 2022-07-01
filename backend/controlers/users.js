@@ -65,6 +65,10 @@ module.exports.createUser = (req, res, next) => {
   }
   bcrypt
     .hash(req.body.password, 10)
+    .catch((err) => {
+      if (err.code === 11000) throw new ConflictError('Email already taken');
+      else next(err);
+    })
     .then((password) =>
       User.create({
         name,
@@ -72,9 +76,6 @@ module.exports.createUser = (req, res, next) => {
         avatar,
         email,
         password,
-      }).catch((err) => {
-        if (err.code === 11000) throw new ConflictError('Email already taken');
-        else next(err);
       })
     )
 
