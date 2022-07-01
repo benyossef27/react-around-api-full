@@ -10,7 +10,6 @@ const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controlers/users');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
-const ServerError = require('./errors/server-err');
 
 const { PORT = 3000 } = process.env;
 
@@ -56,7 +55,8 @@ app.use(errors());
 app.use(errorLogger);
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  const message = statusCode === 500 ? 'An error has occurred on the server' : err.message;
+  const message =
+    statusCode === 500 ? 'An error has occurred on the server' : err.message;
   res.status(statusCode).send({ message });
   next();
 });
