@@ -56,17 +56,12 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  let email;
-  if (!validator.isEmail(req.body.email)) {
-    email = null;
-  } else {
-    email = req.body.email;
-  }
+  const { name, about, avatar } = req.body;
+  let email = req.body.email;
   User.findOne({ email }).then((user) => {
     if (user) {
       next(new ConflictError('Email already taken'));
     } else {
-      const { name, about, avatar } = req.body;
       bcrypt
         .hash(req.body.password, 10)
         .then((password) =>
