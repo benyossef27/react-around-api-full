@@ -55,14 +55,14 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar, email } = req.body;
+  const { name, about, avatar, email, password } = req.body;
   User.findOne({ email }).then((user) => {
     if (user) {
       next(new ConflictError('Email already taken'));
     } else {
       bcrypt
         .hash(req.body.password, 10)
-        .then((password) =>
+        .then(() =>
           User.create({
             name,
             about,
