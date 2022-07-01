@@ -77,7 +77,7 @@ module.exports.createUser = (req, res, next) => {
         .status(201)
         .send({ id: user._id })
         .catch((err) => {
-          if (err.code === 11000) {
+          if (err.code === 409) {
             next(new ConflictError('User already exists'));
           } else {
             next(err);
