@@ -73,11 +73,10 @@ module.exports.createUser = (req, res, next) => {
         avatar,
         email,
         password,
+      }).catch(() => {
+        next(new ConflictError('Email already taken'));
       })
     )
-    .catch(() => {
-      next(new ConflictError('Email already taken'));
-    })
 
     .then((user) => {
       res.status(201).send({ id: user._id });
