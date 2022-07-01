@@ -56,7 +56,6 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar } = req.body;
   let email;
   if (!validator.isEmail(req.body.email)) {
     email = null;
@@ -67,9 +66,9 @@ module.exports.createUser = (req, res, next) => {
     if (user) {
       next(new ConflictError('Email already taken'));
     } else {
+      const { name, about, avatar, email } = req.body;
       bcrypt
         .hash(req.body.password, 10)
-
         .then((password) =>
           User.create({
             name,
