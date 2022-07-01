@@ -71,7 +71,7 @@ module.exports.createUser = (req, res, next) => {
             password: hash,
           })
         )
-        .then((user) => {
+        .then((res) => {
           res.status(201).send({ id: user._id });
         })
         .catch(next);
