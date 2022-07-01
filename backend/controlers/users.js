@@ -72,16 +72,10 @@ module.exports.createUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Error, please check your data');
       }
-      User.findOne(user).then((userSafe) =>
-        res.status(StatusCodes.CREATED).send(userSafe)
-      );
+      User.findOne(user).then((userSafe) => res.send(userSafe));
     })
     .catch((err) => {
-      if (err.code === 11000)
-        throw new ConflictError(
-          StatusCodes.CONFLICT,
-          'Error, please check your data'
-        );
+      if (err.code === 11000) throw new ConflictError('Email taken');
       else next(err);
     })
     .catch(next);
