@@ -56,36 +56,32 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { email, password } = req.body;
-  User.findOne({ email })
-    .then((user) => {
-      if (user) {
-        throw new ConflictError(`Email already exists: ${email}`);
-      } else {
-        return bcrypt.hash(password, 10);
-      }
-    })
-    .then((hash) =>
+  const { name, about, avatar } = req.body;
+  let email;
+  if (!validator.isEmail(req.body.email)) {
+    email = null;
+  } else {
+    email = req.body.email;
+  }
+  bcrypt
+    .hash(req.body.password, 10)
+    .then((password) =>
       User.create({
+        name,
+        about,
+        avatar,
         email,
-        password: hash,
+        password,
       })
     )
+
     .then((user) => {
-      res.status(201).send({
-        data: {
-          _id: user._id,
-          email: user.email,
-        },
-      });
+      res.status(201).send({ id: user._id });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError(`Invalid email or password: ${err.message}`));
-      } else {
-        next(err);
-      }
-    });
+    .catch(() => {
+      next(new ConflictError('User already exists'));
+    })
+    .catch(next);
 };
 
 module.exports.updateUser = (req, res, next) => {
