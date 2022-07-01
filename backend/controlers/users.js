@@ -65,6 +65,9 @@ module.exports.createUser = (req, res, next) => {
   }
   bcrypt
     .hash(req.body.password, 10)
+    .catch(() => {
+      next(new ConflictError('User already exists'));
+    })
     .then((password) =>
       User.create({
         name,
@@ -77,9 +80,6 @@ module.exports.createUser = (req, res, next) => {
 
     .then((user) => {
       res.status(201).send({ id: user._id });
-    })
-    .catch(() => {
-      next(new ConflictError('User already exists'));
     })
     .catch(next);
 };
