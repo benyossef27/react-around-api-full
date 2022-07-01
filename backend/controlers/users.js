@@ -55,26 +55,28 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { email, password, name, avatar, about } = req.body;
+  const { name, about, avatar, email, password } = req.body;
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        next(new ConflictError('Email already exists'));
+        return Promise.reject(new ConflictError('User already exists'));
       } else {
-        bcrypt.hash(password, 10);
+        return bcrypt.hash(password, 10);
       }
     })
-    .then((hash) =>
+    .then((hash) => {
       User.create({
+        name,
+        about,
+        avatar,
         email,
         password: hash,
-        name,
-        avatar,
-        about,
       })
-    )
-    .then((user) => res.send(user))
-    .catch(next);
+        .then((user) => {
+          res.status(OK).send({ _id: user._id, email: user.email });
+        })
+        .catch(next);
+    });
 };
 
 module.exports.updateUser = (req, res, next) => {
