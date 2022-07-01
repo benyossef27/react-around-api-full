@@ -56,35 +56,36 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar } = req.body;
-  let email;
-  if (!validator.isEmail(req.body.email)) {
-    email = null;
-  } else {
-    email = req.body.email;
-  }
-  bcrypt
-    .hash(req.body.password, 10)
+  User.findOne({ email }).then((user) => {
+    if (user) {
+      next(new ConflictError('Email already taken'));
+    } else {
+      const { name, about, avatar } = req.body;
+      let email;
+      if (!validator.isEmail(req.body.email)) {
+        email = null;
+      } else {
+        email = req.body.email;
+      }
+      bcrypt
+        .hash(req.body.password, 10)
 
-    .then((password) =>
-      User.create({
-        name,
-        about,
-        avatar,
-        email,
-        password,
-      })
-    )
+        .then((password) =>
+          User.create({
+            name,
+            about,
+            avatar,
+            email,
+            password,
+          })
+        )
 
-    .then((user) => {
-      res
-        .status(201)
-        .send({ id: user._id })
-        .catch(() => {
-          next(new ConflictError('Email already taken'));
-        });
-    })
-    .catch(next);
+        .then((user) => {
+          res.status(201).send({ id: user._id });
+        })
+        .catch(next);
+    }
+  });
 };
 
 module.exports.updateUser = (req, res, next) => {
