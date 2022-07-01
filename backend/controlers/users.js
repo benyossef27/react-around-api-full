@@ -75,11 +75,7 @@ module.exports.createUser = (req, res, next) => {
       })
     )
     .catch((err) => {
-      if (err.code === 11000)
-        throw new ErrorHandler(
-          StatusCodes.CONFLICT,
-          'Error, please check your data'
-        );
+      if (err.code === 11000) throw new ConflictError('Email already taken');
       else next(err);
     })
 
