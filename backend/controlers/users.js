@@ -60,9 +60,8 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => {
       if (user) {
         return Promise.reject(new ConflictError('User already exists'));
-      } else {
-        bcrypt.hash(password, 10);
       }
+      return bcrypt.hash(password, 10);
     })
     .then((hash) => {
       User.create({
