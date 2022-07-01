@@ -13,7 +13,8 @@ module.exports.deleteCard = (req, res, next) => {
           .then((deletedCard) => res.send({ data: deletedCard }))
           .catch(next);
       }
-    });
+    })
+    .catch(next);
 };
 
 module.exports.getCards = (req, res, next) => {
