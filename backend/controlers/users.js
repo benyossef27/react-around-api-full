@@ -29,8 +29,7 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  User.findByCredentials({ email, password })
-    .orFail(() => new AuthError('Incorrect email or password.'))
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
@@ -39,11 +38,11 @@ module.exports.login = (req, res, next) => {
           expiresIn: '7d',
         }
       );
-      res.send({ token }).catch(() => {
-        next(new AuthError('Incorrect email or password'));
-      });
+      res.send({ token });
     })
-    .catch(next);
+    .catch((err) => {
+      next(err);
+    });
 };
 
 module.exports.getUsers = (req, res, next) => {
