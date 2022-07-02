@@ -29,7 +29,7 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  User.findUserByCredentials(email, password)
+  User.findByCredentials({ email, password })
     .select('+password')
     .orFail(() => new AuthError('Incorrect email or password.'))
     .then((user) => {
