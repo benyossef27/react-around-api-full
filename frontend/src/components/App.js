@@ -165,10 +165,9 @@ export default function App() {
     const isLiked = card.likes.includes(currentUser._id);
     api
       .changeLikeCardStatus(card, !isLiked)
-      .then((newCard) => {
-        console.log(cards);
-        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-        setCards(newCards);
+      .then((res) => {
+        const newCards = cards.map((c) => (res._id === c._id ? res : c));
+        setCards([...newCards]);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
