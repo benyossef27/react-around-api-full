@@ -41,8 +41,8 @@ module.exports.likeCard = (req, res, next) => {
     { new: true }
   )
     .orFail(() => new NotFoundError('Card id not found.'))
-    .then((card) => {
-      res.send(card);
+    .then((cards) => {
+      res.send({ cards });
     })
     .catch(next);
 };
@@ -52,8 +52,8 @@ module.exports.dislikeCard = (req, res, next) => {
   const { _id: userId } = req.user;
   Card.findByIdAndUpdate(cardId, { $pull: { likes: userId } }, { new: true })
     .orFail(() => new NotFoundError('Card id not found.'))
-    .then((card) => {
-      res.send(card);
+    .then((cards) => {
+      res.send({ cards });
     })
     .catch(next);
 };
