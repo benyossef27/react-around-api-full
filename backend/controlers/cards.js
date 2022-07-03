@@ -42,7 +42,7 @@ module.exports.likeCard = (req, res, next) => {
   )
     .orFail(() => new NotFoundError('Card id not found.'))
     .then((card) => {
-      res.send({ card });
+      res.send(card);
     })
     .catch(next);
 };
@@ -53,7 +53,7 @@ module.exports.dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(cardId, { $pull: { likes: userId } }, { new: true })
     .orFail(() => new NotFoundError('Card id not found.'))
     .then((card) => {
-      res.send({ card });
+      res.send(card);
     })
     .catch(next);
 };

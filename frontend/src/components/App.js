@@ -162,15 +162,13 @@ export default function App() {
   }, []);
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((like) => like === currentUser._id);
+    const isLiked = card.likes.includes(currentUser._id);
     api
       .changeLikeCardStatus(card, !isLiked)
       .then((newCard) => {
-        setCards((state) =>
-          state.map((currentCard) =>
-            currentCard._id === card ? newCard : currentCard
-          )
-        );
+        console.log(cards);
+        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+        setCards(newCards);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
