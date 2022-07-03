@@ -50,11 +50,7 @@ module.exports.likeCard = (req, res, next) => {
 module.exports.dislikeCard = (req, res, next) => {
   const { cardId } = req.params;
   const { _id: userId } = req.user;
-  Card.findByIdAndUpdate(
-    cardId,
-    { $addToSet: { likes: userId } },
-    { new: true }
-  )
+  Card.findByIdAndUpdate(cardId, { $pull: { likes: userId } }, { new: true })
     .orFail(() => new NotFoundError('Card id not found.'))
     .then((card) => {
       res.send({ card });
