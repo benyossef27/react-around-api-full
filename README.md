@@ -1,9 +1,7 @@
-# react-around-api-full
+# Around The U.S. 
 
-The API of "Around the U.S." with authorization and registration handled by the back-end server.
+  A side-to-side app showcasing a travelers social app where users can register and login to uplode photos of their journey on to cards, add a title, delete only their   own cards,  watch and like other travelers's cards. 
 
-This repository contains the full API of "Around the U.S." project that features user authorization and user registration and handles cards and users. Please add to this readme:
+  The API of "Around the U.S." with authorization and registration handled by the back-end server on google cloud.
 
-[- a link to repository with the complete React application which uses this API](https://github.com/benyossef27/react-around-api-full);
-
-[- a link to the website that hosts your API.](https://benyo27.students.nomoreparties.sbs)
+[- Here is a link to the website](https://benyo27.students.nomoreparties.sbs)
